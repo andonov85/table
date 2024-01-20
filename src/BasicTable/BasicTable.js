@@ -4,14 +4,15 @@ import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import { InView } from 'react-intersection-observer';
 import { cell, row } from './sxStyles';
 
-const items = new Array(10000);
-items.fill(null);
+const defaultItems = new Array(20).fill(null);
+const nextItems = new Array(5).fill(null);
 
-const TableRowList = ({ position }) => {
+const TableRowList = React.forwardRef(({ position }, ref) => {
   return (
-    <TableRow sx={row}>
+    <TableRow ref={ref} sx={row}>
       <TableCell sx={cell}>{position}</TableCell>
       <TableCell sx={cell}>{position}</TableCell>
       <TableCell sx={cell}>{position}</TableCell>
@@ -20,9 +21,11 @@ const TableRowList = ({ position }) => {
       <TableCell sx={cell}>{position}</TableCell>
     </TableRow>
   );
-};
+});
 
 const BasicTable = () => {
+  const [items, setItems] = React.useState(defaultItems);
+
   return (
     <Table>
       <TableHead>
@@ -36,9 +39,25 @@ const BasicTable = () => {
         </TableRow>
       </TableHead>
       <TableBody>
-        {items.map((item, index) => (
-          <TableRowList position={index} key={index} />
-        ))}
+        {items.map((item, index, arr) => {
+          if (index !== arr.length - 1)
+            return <TableRowList position={index} key={index} />;
+
+          // We are observing only the last row element.
+          // So when it enters the viewport, inView becames 'true',
+          // then we add 5 more elements to the end of the items array.
+          return (
+            <InView>
+              {({ inView, ref, entry }) => {
+                if (inView) {
+                  setItems((prevItems) => [...prevItems, ...nextItems]);
+                }
+
+                return <TableRowList ref={ref} position={index} key={index} />;
+              }}
+            </InView>
+          );
+        })}
       </TableBody>
     </Table>
   );

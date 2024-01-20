@@ -4,6 +4,7 @@ import { Box } from '@mui/material';
 import { boxStyles } from './sxStyles';
 import { Menu } from '../Menu/Menu';
 import { TableVirtuosoComponent } from '../TableVirtuoso/TableVirtuoso';
+import BasicTable from '../BasicTable/BasicTable';
 
 export const TablePage = () => {
   const LazyBasicTable = lazy(() => import('../BasicTable/BasicTable'));
@@ -13,9 +14,12 @@ export const TablePage = () => {
       <Menu />
       <Box sx={boxStyles}>JUST HEADER</Box>
       <Box sx={boxStyles}>Some another content</Box>
-      <Suspense fallback={<Box sx={boxStyles}>Loading...</Box>}>
+
+      <BasicTable />
+
+      {/* <Suspense fallback={<Box sx={boxStyles}>Loading...</Box>}>
         <LazyBasicTable />
-      </Suspense>
+      </Suspense> */}
       {/* <TableVirtuosoComponent /> */}
     </>
   );
