@@ -6,7 +6,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { cell, row } from './sxStyles';
 
-const items = new Array(3000);
+const items = new Array(10000);
 items.fill(null);
 
 const TableRowList = ({ position }) => {
@@ -22,7 +22,7 @@ const TableRowList = ({ position }) => {
   );
 };
 
-export const BasicTable = () => {
+const BasicTable = () => {
   return (
     <Table>
       <TableHead>
@@ -43,3 +43,4 @@ export const BasicTable = () => {
     </Table>
   );
 };
+export default BasicTable;
