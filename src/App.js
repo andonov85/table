@@ -1,16 +1,17 @@
-import logo from './logo.svg';
-import './App.css';
-import BasicTable from './BasicTable';
-import TableVirtuosoTest from './TableVirtuoso';
+import { HomePage } from './HomePage/HomePage';
+import { TablePage } from './TablePage/TablePage';
+import React from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-function App() {
+const App = () => {
   return (
-    <div className='App'>
-      {/* <div>test</div> */}
-      <TableVirtuosoTest />
-      {/* <BasicTable /> */}
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<HomePage />} />
+        <Route path='/table' element={<TablePage />} />
+      </Routes>
+    </BrowserRouter>
   );
-}
+};
 
 export default App;
